@@ -1,13 +1,13 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
-import ReactDOM, {render} from 'react-dom';
+import {render} from 'react-dom';
 import {
     createStore,
-    combineReducers,
+    // combineReducers,
     applyMiddleware
 } from 'redux';
 import {Provider} from 'react-redux';
-import App from './components/Main';
+import App from './containers';
 import reducer from './reducers';
 
 // 添加日志
@@ -17,6 +17,7 @@ const logger = store => next => action => {
     let result = next(action);
     console.log('next state', store.getState());
     console.groupEnd(action.type);
+    return result
 };
 // 中间件
 let createStoreWithMiddleware = applyMiddleware(logger)(createStore);
