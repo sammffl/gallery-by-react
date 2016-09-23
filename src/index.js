@@ -1,14 +1,29 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, {render} from 'react-dom';
 import {
-  createStore,
-  combineReducers,
-  applyMiddleware
+    createStore,
+    combineReducers,
+    applyMiddleware
 } from 'redux';
-
-
+import {Provider} from 'react-redux';
 import App from './components/Main';
+import reducer from './reducers';
 
+const logger = store => next => action => {
+    console.group(action.type);
+    console.info('dispatching', action);
+    let result = next(action);
+    console.log('next state', store.getState());
+    console.groupEnd(action.type);
+};
+
+let createStoreWithMiddleware = applyMiddleware(logger)(createStore);
+const store = createStoreWithMiddleware(reducer);
 // Render the main component into the dom
-ReactDOM.render(<App />, document.getElementById('app'));
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('app')
+);
