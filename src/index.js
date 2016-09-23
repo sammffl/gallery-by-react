@@ -10,6 +10,7 @@ import {Provider} from 'react-redux';
 import App from './components/Main';
 import reducer from './reducers';
 
+// 添加日志
 const logger = store => next => action => {
     console.group(action.type);
     console.info('dispatching', action);
