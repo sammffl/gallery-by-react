@@ -18,7 +18,7 @@ const logger = store => next => action => {
     console.log('next state', store.getState());
     console.groupEnd(action.type);
 };
-
+// 中间件
 let createStoreWithMiddleware = applyMiddleware(logger)(createStore);
 const store = createStoreWithMiddleware(reducer);
 // Render the main component into the dom
